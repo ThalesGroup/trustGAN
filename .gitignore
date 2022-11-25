@@ -1,0 +1,5 @@
+xps/*
+data/*
+build/*
+trustgan.egg-info/*
+*.ipynb_checkpoints*

@@ -1,44 +1,102 @@
-# Thales Open Source Template Project
+# TrustGAN
 
-Template for creating a new project in the [Thales GitHub organization](https://github.com/ThalesGroup).
+TrustGAN: Training safe and trustworthy deep learning models through generative adversarial networks
 
-Each Thales OSS project repository **MUST** contain the following files at the root:
+This package provides the code developped for the paper:\
+"TrustGAN: Training safe and trustworthy deep learning models through generative adversarial networks"\
+presented at the CAID-2022 (Conference on Artificial Intelligence for Defence)
 
-- a `LICENSE` which has been chosen in accordance with legal department depending on your needs
+## Install
 
-- a `README.md` outlining the project goals, sponsoring sig, and community contact information, [GitHub tips about README.md](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/about-readmes)
+With python, pip and setuptools installed, you simply need to:
 
-- a `CONTRIBUTING.md` outlining how to contribute to the project, how to submit a pull request and an issue
+```bash
+python -m pip install .
+```
 
-- a `SECURITY.md` outlining how the security concerns are handled, [GitHub tips about SECURITY.md](https://docs.github.com/en/github/managing-security-vulnerabilities/adding-a-security-policy-to-your-repository)
+## Get the data and train a model
 
-Below is an example of the common structure and information expected in a README.
+We will work within `./xps/`:
 
-**Please keep this structure as is and only fill the content for each section according to your project.**
+### Get the datasets
 
-If you need assistance or have question, please contact oss@thalesgroup.com
+You can download in-distribution (ID) sample datasets within `data/`:
 
-## Get started
+```bash
+python3 ../bin/trustgan-download-data.py --path2save "data/" --dataset "MNIST"
+```
 
-XXX project purpose it to ...
+You can download out-of-distribution (OOD) sample datasets within `data/`:
 
-**Please also add the description into the About section (Description field)**
+```bash
+python3 ../bin/trustgan-download-data.py --path2save "data/" --dataset "FashionMNIST"
+python3 ../bin/trustgan-download-data.py --path2save "data/" --dataset "CIFAR10"
+```
 
-## Documentation
+### Train a model
 
-Documentation is available at [xxx/docs](https://xxx/docs/).
+We will now train two models, one without TrustGAN and another with it,
+with a selected device `<device>`:
 
-You can use [GitHub pages](https://guides.github.com/features/pages/) to create your documentation.
+```bash
+python3 ../bin/trustgan-model-gan-combined-training.py \
+    --path2save "mnist-wo-gan/" \
+    --path2dataset "data/MNIST" \
+    --nb-classes 10 \
+    --prop-net-alone 1 \
+    --num-epochs 100 \
+    --batch-size 512 \
+    --device "cuda:0"
+```
 
-See an example here : https://github.com/ThalesGroup/ThalesGroup.github.io
+```bash
+python3 ../bin/trustgan-model-gan-combined-training.py \
+    --path2save "mnist-wi-gan/" \
+    --path2dataset "data/MNIST" \
+    --nb-classes 10 \
+    --num-epochs 100 \
+    --batch-size 512 \
+    --nb-step-net-alone 1 \
+    --device "cuda:1"
+```
 
-**Please also add the documentation URL into the About section (Website field)**
+## Test
+
+You can get summary plots and gifs with:
+
+```bash
+python3 ../bin/trustgan-model-gan-combined-training.py \
+    --path2save "mnist-wo-gan/" \
+    --path2dataset "data/MNIST" \
+    --nb-classes 10 \
+    --produce-plots
+```
+
+```bash
+python3 ../bin/trustgan-model-gan-combined-training.py \
+    --path2save "mnist-wi-gan/" \
+    --path2dataset "data/MNIST" \
+    --nb-classes 10 \
+    --produce-plots
+```
 
 ## Contributing
 
-If you are interested in contributing to the XXX project, start by reading the [Contributing guide](/CONTRIBUTING.md).
+If you are interested in contributing to the project, start by reading the [Contributing guide](/CONTRIBUTING.md).
 
 ## License
 
-The chosen license in accordance with legal department must be defined into an explicit [LICENSE](https://github.com/ThalesGroup/template-project/blob/master/LICENSE) file at the root of the repository
-You can also link this file in this README section.
+This repository is licensed under the terms of the MIT License (see the file [LICENSE](/LICENSE)).
+
+## Citing
+
+Please cite the following paper if you are using TrustGAN
+
+```bibtex
+@inproceedings{dMdBTrustGAN,
+       author = {{du Mas des Bourboux}, H{\'e}lion},
+    booktitle = {CAID 2022-Second Conference on Artificial Intelligence for Defence},
+        title = {TrustGAN: Training safe and trustworthy deep learning models through generative adversarial networks},
+         year = {2022},
+}
+```
