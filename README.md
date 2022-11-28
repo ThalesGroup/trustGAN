@@ -4,7 +4,7 @@ TrustGAN: Training safe and trustworthy deep learning models through generative 
 
 This package provides the code developped for the paper:\
 "TrustGAN: Training safe and trustworthy deep learning models through generative adversarial networks"\
-presented at the CAID-2022 (Conference on Artificial Intelligence for Defence)
+presented at the CAID-2022 (Conference on Artificial Intelligence for Defence) <https://arxiv.org/abs/2211.13991>
 
 ## Install
 
@@ -93,10 +93,19 @@ This repository is licensed under the terms of the MIT License (see the file [LI
 Please cite the following paper if you are using TrustGAN
 
 ```bibtex
-@inproceedings{dMdBTrustGAN,
+@ARTICLE{2022arXiv221113991D,
        author = {{du Mas des Bourboux}, H{\'e}lion},
-    booktitle = {CAID 2022-Second Conference on Artificial Intelligence for Defence},
-        title = {TrustGAN: Training safe and trustworthy deep learning models through generative adversarial networks},
-         year = {2022},
+        title = "{TrustGAN: Training safe and trustworthy deep learning models through generative adversarial networks}",
+      journal = {arXiv e-prints},
+     keywords = {Computer Science - Machine Learning, Computer Science - Computer Vision and Pattern Recognition},
+         year = 2022,
+        month = nov,
+          eid = {arXiv:2211.13991},
+        pages = {arXiv:2211.13991},
+archivePrefix = {arXiv},
+       eprint = {2211.13991},
+ primaryClass = {cs.LG},
+       adsurl = {https://ui.adsabs.harvard.edu/abs/2022arXiv221113991D},
+      adsnote = {Provided by the SAO/NASA Astrophysics Data System}
 }
 ```
