@@ -83,7 +83,7 @@ class resNetUnit(torch.nn.Module):
         )  ## padding_mode='replicate' seem very important for GAN
         torch.nn.init.constant_(self.conv3.bias, 0.0)
 
-        ### Helps a lot the GAN
+        # Helps a lot the GAN
         if isGan:
             self.relu = torch.nn.LeakyReLU()
         else:
@@ -134,7 +134,7 @@ class Net(torch.nn.Module):
     ):
         super(Net, self).__init__()
 
-        ###
+        #
         self.nb_dims = int(dim[:-1])
         print(f"INFO: nb_dims = {self.nb_dims}")
         if dim == "1d":
@@ -142,7 +142,7 @@ class Net(torch.nn.Module):
         elif dim == "2d":
             conv = torch.nn.Conv2d
 
-        ###
+        #
         chs = np.array(residualUnits)
         chs = chs[chs > nb_channels]
         chs = np.append([nb_channels], chs)
@@ -163,7 +163,7 @@ class Net(torch.nn.Module):
             ]
         )
 
-        ### This convolution is very important. Without the net does not learn
+        # This convolution is very important. Without the net does not learn
         self.conv1 = conv(in_channels=chs[-1], out_channels=chs[-1], kernel_size=1)
 
         self.lin_00 = torch.nn.Linear(in_features=chs[-1], out_features=fcl)
@@ -200,13 +200,13 @@ class Gan(torch.nn.Module):
     ):
         super(Gan, self).__init__()
 
-        ###
+        #
         if dim == "1d":
             conv = torch.nn.Conv1d
         elif dim == "2d":
             conv = torch.nn.Conv2d
 
-        ###
+        #
         chs = np.array(residualUnits)
         chs = chs[chs > nb_channels]
         chs = np.append([nb_channels], chs)

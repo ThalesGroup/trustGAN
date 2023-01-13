@@ -114,14 +114,14 @@ def main(
         create_gif(path2save, "example-true-image-max-step-*.png")
     else:
 
-        ###
+        #
         if not os.path.isdir(path2save):
             os.mkdir(path2save)
         cfgs = open("{}/configs.txt".format(path2save), "w")
         cfgs.write(" ".join(sys.argv))
         cfgs.close()
 
-        ###
+        #
         training_pipeline = Training(
             path_to_save=path2save,
             path2dataset=path2dataset,

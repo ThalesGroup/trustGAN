@@ -55,7 +55,7 @@ class WaveUnet(torch.nn.Module):
     ):
         super(WaveUnet, self).__init__()
 
-        ###
+        #
         self.nb_dims = int(dim[:-1])
         print(f"INFO: nb_dims = {self.nb_dims}")
         if dim == "1d":
@@ -67,7 +67,7 @@ class WaveUnet(torch.nn.Module):
             batchnorm = torch.nn.BatchNorm2d
             maxpool = torch.nn.MaxPool2d
 
-        ###
+        #
         chs = np.array(residualUnits)
         chs = chs[chs >= nb_channels]
 

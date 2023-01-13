@@ -40,14 +40,14 @@ import inspect
 class Dataset:
     def __init__(self, dataset, path2save, splits=[0.7, 0.15, None], seed=42):
 
-        ###
+        #
         self.splits = self.get_splits(splits)
         self.dataset = dataset
         self.path2save = path2save
 
         np.random.seed(seed)
 
-        ###
+        #
         data = self.get_data()
         self.save_data(data)
 
@@ -86,7 +86,7 @@ class Dataset:
 
         data = {}
 
-        ### Train and Valid
+        # Train and Valid
         trainvalidset = self.get_torch_dataset_type(True)
 
         splits = self.splits[:2] / self.splits[:2].sum()
@@ -106,11 +106,11 @@ class Dataset:
             "y": trainvalidset["y"][nb_split:],
         }
 
-        ### Test
+        # Test
         testset = self.get_torch_dataset_type(False)
         data["test"] = testset
 
-        ### New splits
+        # New splits
         print("INFO: previous splits:", self.splits)
         self.splits = np.array(
             [data[el]["y"].shape[0] for el in ["train", "valid", "test"]], dtype=float
@@ -155,7 +155,7 @@ class Dataset:
             if type(y) == type([]):
                 y = torch.from_numpy(np.array(y))
 
-            ### Channels manipulations
+            # Channels manipulations
             X, y = self.channel_manipulations(X, y)
 
         return {"X": X, "y": y}

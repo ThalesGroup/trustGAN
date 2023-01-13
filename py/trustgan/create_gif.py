@@ -31,7 +31,7 @@ import imageio
 import glob
 import numpy as np
 
-### https://stackoverflow.com/questions/753190/programmatically-generate-video-or-animated-gif-in-python
+# https://stackoverflow.com/questions/753190/programmatically-generate-video-or-animated-gif-in-python
 
 
 def create_gif(root, pattern):

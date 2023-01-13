@@ -106,7 +106,7 @@ def get_dataloader(path2dataset, nb_classes, dataset_type, batch_size=64, verbos
     X = torch.load(os.path.join(path2dataset, f"X_{dataset_type}.pt"))
     y = torch.load(os.path.join(path2dataset, f"y_{dataset_type}.pt"))
 
-    ###
+    #
     X = X.to(torch.float)
     y = y.to(torch.long)
 
