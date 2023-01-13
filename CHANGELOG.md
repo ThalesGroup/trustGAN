@@ -1,5 +1,9 @@
 # Release Notes
 
+## Version 0.0.0 - 2023/01/13
+
+- apply flake8
+
 ## Version 0.0.0 - 2022/11/25
 
 - links are github
