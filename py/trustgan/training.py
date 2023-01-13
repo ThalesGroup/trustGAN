@@ -69,7 +69,7 @@ class Training:
         self.path_to_load_gan = path_to_load_gan
 
         #
-        if not self.path_to_save is None:
+        if self.path_to_save is not None:
             if not os.path.isdir(self.path_to_save):
                 os.mkdir(self.path_to_save)
             for folder in ["plots", "nets", "perfs-plots", "gifs"]:
@@ -114,7 +114,7 @@ class Training:
         self.sequence_dims_onnx = np.arange(2, 2 + nb_dims)
 
         #
-        if not path2net is None:
+        if path2net is not None:
             self.net = path2net
         else:
             self.net = getattr(networks, network_name)(
@@ -433,7 +433,7 @@ class Training:
         """ """
 
         if save_plot:
-            if not loader is None:
+            if loader is not None:
                 self.net.eval()
                 self.gan.eval()
                 dims = list(self.modifier(next(iter(loader)))[0].shape)

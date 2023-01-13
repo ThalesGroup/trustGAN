@@ -59,14 +59,14 @@ class Modifier:
     def one_channel(self, X):
 
         if (
-            (not self.nb_channels is None)
+            (self.nb_channels is not None)
             and (self.nb_channels == 1)
             and (X.shape[1] > 1)
         ):
             idx = torch.randint(0, X.shape[1], (1,))
             X = X[:, idx : idx + 1]
         elif (
-            (not self.nb_channels is None)
+            (self.nb_channels is not None)
             and (self.nb_channels > 1)
             and (X.shape[1] == 1)
         ):

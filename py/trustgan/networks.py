@@ -70,7 +70,7 @@ class resNetUnit(torch.nn.Module):
             padding=dilation * (kernel_size - 1) // 2,
             dilation=dilation,
             padding_mode="replicate",
-        )  ## padding_mode='replicate' seem very important for GAN
+        )  # padding_mode='replicate' seem very important for GAN
         torch.nn.init.constant_(self.conv2.bias, 0.0)
 
         self.conv3 = conv(
@@ -80,7 +80,7 @@ class resNetUnit(torch.nn.Module):
             padding=dilation * (kernel_size - 1) // 2,
             dilation=dilation,
             padding_mode="replicate",
-        )  ## padding_mode='replicate' seem very important for GAN
+        )  # padding_mode='replicate' seem very important for GAN
         torch.nn.init.constant_(self.conv3.bias, 0.0)
 
         # Helps a lot the GAN
@@ -111,7 +111,7 @@ class resNetUnit(torch.nn.Module):
         x = self.conv1(x)
         x = x + res
 
-        if not self.batch_norm is None:
+        if self.batch_norm is not None:
             x = self.batch_norm(x)
 
         x = self.relu(x)
