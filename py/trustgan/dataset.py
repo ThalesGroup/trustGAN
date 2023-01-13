@@ -13,8 +13,8 @@
 # copies of the Software, and to permit persons to whom the Software is
 # furnished to do so, subject to the following conditions:
 #
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
 #
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -59,14 +59,14 @@ class Modifier:
     def one_channel(self, X):
 
         if (
-            (not self.nb_channels is None)
+            (self.nb_channels is not None)
             and (self.nb_channels == 1)
             and (X.shape[1] > 1)
         ):
             idx = torch.randint(0, X.shape[1], (1,))
             X = X[:, idx : idx + 1]
         elif (
-            (not self.nb_channels is None)
+            (self.nb_channels is not None)
             and (self.nb_channels > 1)
             and (X.shape[1] == 1)
         ):
@@ -106,7 +106,7 @@ def get_dataloader(path2dataset, nb_classes, dataset_type, batch_size=64, verbos
     X = torch.load(os.path.join(path2dataset, f"X_{dataset_type}.pt"))
     y = torch.load(os.path.join(path2dataset, f"y_{dataset_type}.pt"))
 
-    ###
+    #
     X = X.to(torch.float)
     y = y.to(torch.long)
 

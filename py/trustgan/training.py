@@ -13,8 +13,8 @@
 # copies of the Software, and to permit persons to whom the Software is
 # furnished to do so, subject to the following conditions:
 #
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
 #
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -63,13 +63,13 @@ class Training:
 
         self.verbose = verbose
 
-        ###
+        #
         self.path_to_save = path_to_save
         self.path_to_load_net = path_to_load_net
         self.path_to_load_gan = path_to_load_gan
 
-        ###
-        if not self.path_to_save is None:
+        #
+        if self.path_to_save is not None:
             if not os.path.isdir(self.path_to_save):
                 os.mkdir(self.path_to_save)
             for folder in ["plots", "nets", "perfs-plots", "gifs"]:
@@ -78,7 +78,7 @@ class Training:
                 else:
                     print("\nWARNING\n Files exists")
 
-        ###
+        #
         self.nb_classes = nb_classes
         self.trainloader = get_dataloader(
             path2dataset=path2dataset,
@@ -103,18 +103,18 @@ class Training:
         )
         self.modifier = Modifier(nb_channels=nb_channels)
 
-        ###
+        #
         nb_dims = self.modifier(next(iter(self.validloader)))[0].ndim - 2
         print(f"INFO: Found {nb_dims} dimensions")
         nb_channels = self.modifier(next(iter(self.validloader)))[0].shape[1]
         print(f"INFO: Found {nb_channels} channels")
 
-        ###
+        #
         self.device = self.get_device(device_name=device_name)
         self.sequence_dims_onnx = np.arange(2, 2 + nb_dims)
 
-        ###
-        if not path2net is None:
+        #
+        if path2net is not None:
             self.net = path2net
         else:
             self.net = getattr(networks, network_name)(
@@ -127,7 +127,7 @@ class Training:
         self.net_loss = softXEnt
         self.net_optim = torch.optim.AdamW(self.net.parameters(), weight_decay=0.05)
 
-        ###
+        #
         self.gan = Gan(
             nb_channels=nb_channels,
             batch_norm=True,
@@ -144,7 +144,7 @@ class Training:
             cycle_momentum=False,
         )
 
-        ###
+        #
         for model, path_to_load in [
             (self.net, self.path_to_load_net),
             (self.gan, self.path_to_load_gan),
@@ -167,7 +167,7 @@ class Training:
 
         self.gan2 = copy.deepcopy(self.gan)
 
-        ###
+        #
         self.num_epochs = num_epochs
         self.nb_step_net_gan = nb_step_net_gan
         self.nb_step_gan = nb_step_gan
@@ -324,7 +324,7 @@ class Training:
             inputs, labels = data[0].to(self.device), data[1].to(self.device)
             inputs, labels = self.modifier((inputs, labels))
 
-            ### Net on real data
+            # Net on real data
             outputs = self.net(inputs)
             loss["net"] += (
                 self.net_loss(outputs, labels, reduction="sum").detach().cpu().numpy()
@@ -335,7 +335,7 @@ class Training:
                 (hard_predicted == hard_labels).float().sum().detach().cpu().numpy()
             )
 
-            ### Net on Gan generated images and gan loss
+            # Net on Gan generated images and gan loss
             rand_inputs = torch.rand(inputs.shape, device=self.device)
             rand_labels = (
                 1.0 / self.nb_classes * torch.ones(labels.shape, device=self.device)
@@ -433,7 +433,7 @@ class Training:
         """ """
 
         if save_plot:
-            if not loader is None:
+            if loader is not None:
                 self.net.eval()
                 self.gan.eval()
                 dims = list(self.modifier(next(iter(loader)))[0].shape)
@@ -633,7 +633,7 @@ class Training:
         self.best_loss = float("inf")
         loss_gan = -1.0
 
-        ###
+        #
         for self.epoch in range(self.num_epochs):
 
             self.recover_from_nan_net()
@@ -659,7 +659,7 @@ class Training:
             self.net.train()
             self.gan.train()
 
-            ### Train the classifier
+            # Train the classifier
             for i, data in enumerate(self.trainloader):
 
                 inputs, labels = data[0].to(self.device), data[1].to(self.device)

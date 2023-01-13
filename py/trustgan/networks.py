@@ -13,8 +13,8 @@
 # copies of the Software, and to permit persons to whom the Software is
 # furnished to do so, subject to the following conditions:
 #
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
 #
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -70,7 +70,7 @@ class resNetUnit(torch.nn.Module):
             padding=dilation * (kernel_size - 1) // 2,
             dilation=dilation,
             padding_mode="replicate",
-        )  ## padding_mode='replicate' seem very important for GAN
+        )  # padding_mode='replicate' seem very important for GAN
         torch.nn.init.constant_(self.conv2.bias, 0.0)
 
         self.conv3 = conv(
@@ -80,10 +80,10 @@ class resNetUnit(torch.nn.Module):
             padding=dilation * (kernel_size - 1) // 2,
             dilation=dilation,
             padding_mode="replicate",
-        )  ## padding_mode='replicate' seem very important for GAN
+        )  # padding_mode='replicate' seem very important for GAN
         torch.nn.init.constant_(self.conv3.bias, 0.0)
 
-        ### Helps a lot the GAN
+        # Helps a lot the GAN
         if isGan:
             self.relu = torch.nn.LeakyReLU()
         else:
@@ -111,7 +111,7 @@ class resNetUnit(torch.nn.Module):
         x = self.conv1(x)
         x = x + res
 
-        if not self.batch_norm is None:
+        if self.batch_norm is not None:
             x = self.batch_norm(x)
 
         x = self.relu(x)
@@ -134,7 +134,7 @@ class Net(torch.nn.Module):
     ):
         super(Net, self).__init__()
 
-        ###
+        #
         self.nb_dims = int(dim[:-1])
         print(f"INFO: nb_dims = {self.nb_dims}")
         if dim == "1d":
@@ -142,7 +142,7 @@ class Net(torch.nn.Module):
         elif dim == "2d":
             conv = torch.nn.Conv2d
 
-        ###
+        #
         chs = np.array(residualUnits)
         chs = chs[chs > nb_channels]
         chs = np.append([nb_channels], chs)
@@ -163,7 +163,7 @@ class Net(torch.nn.Module):
             ]
         )
 
-        ### This convolution is very important. Without the net does not learn
+        # This convolution is very important. Without the net does not learn
         self.conv1 = conv(in_channels=chs[-1], out_channels=chs[-1], kernel_size=1)
 
         self.lin_00 = torch.nn.Linear(in_features=chs[-1], out_features=fcl)
@@ -200,13 +200,13 @@ class Gan(torch.nn.Module):
     ):
         super(Gan, self).__init__()
 
-        ###
+        #
         if dim == "1d":
             conv = torch.nn.Conv1d
         elif dim == "2d":
             conv = torch.nn.Conv2d
 
-        ###
+        #
         chs = np.array(residualUnits)
         chs = chs[chs > nb_channels]
         chs = np.append([nb_channels], chs)
