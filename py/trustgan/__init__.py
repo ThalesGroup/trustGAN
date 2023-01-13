@@ -26,4 +26,4 @@
 #
 # 2022 october 21
 
-from ._version import __version__
+from ._version import __version__  # NOQA
